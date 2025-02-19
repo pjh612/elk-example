@@ -1,0 +1,17 @@
+filebeat.inputs:
+  - type: log
+    enabled: true
+    paths:
+      - /var/log/host_logs/json/*.log
+    scan_frequency: 10s
+    json.keys_under_root: true
+    json.add_error_key: true
+
+output.kafka:
+  hosts: ["kafka:29092"]
+  topic: 'logs'
+  partition.round_robin:
+    reachable_only: false
+  required_acks: 1
+  compression: gzip
+  max_message_bytes: 1000000
