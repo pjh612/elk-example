@@ -48,9 +48,9 @@ localhost:8888
     - logstash_internal 계정이 인덱스 생성에 필요한 권한이 없다?
     - 일단 임시로 이렇게 인덱스 추가할수 있는 권한을 생성
       ![img_3.png](img_3.png)
-- filebeat와 kafka 동시 사용이 필요한가? -> 잘모르겠음
-  - logback에서 카프카appender로 바로 카프카에 쏴주면 관리포인트 줄고 간단?
-    - kafka에 대한 의존성이 생김 kafka 장애발생 시 로그 전송할 수 없을 것
-    - 그럼 filebeat가 파일에 로그를 모아두고 kafka 장애 회복시 장애시점 이후의 로그부터 카프카에 줄 수 있는가?
-      - 테스트 해봐야될 듯(시간 나면)
+- filebeat와 kafka 동시 사용이 필요한가?
+  - Elasticsearch는 처음 데이터를 검색할 때 나중에 빠른 액세스를 위해 데이터를 인덱싱 해야함. 이 과정에서 로그 레코드는 시간 초과를 방지하기 위해 먼저 Kafka에 전달
+  - 카프카는 메시지를 컨슈머 그룹 분리로 다양한 방식으로 소비할 수 있음
+  - kafka 장애 발생시?
+    - filebeat는 [최소 한 번 전달 보장](https://www.elastic.co/docs/reference/beats/filebeat/how-filebeat-works#at-least-once-delivery)
 
